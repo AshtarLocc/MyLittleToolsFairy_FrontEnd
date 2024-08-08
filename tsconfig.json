@@ -9,11 +9,21 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "lib": ["ESNext","DOM"],
+    "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
-    "noEmit": true
+    "noEmit": true,
+    "typeRoots": ["./node_modules/@types"],
+    "types": []
   },
-  "include": ["src/**/*.ts","src/**/*.d.ts","**/*.d.ts","src/**/*.tsx","src/**/*.vue"],
-  "references": [{"path": "./tsconfig.app.json"},{"path": "./tsconfig.node.json"}]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/**/*.vue"
+  ],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }
-  
