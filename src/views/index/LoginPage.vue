@@ -77,6 +77,7 @@ import { reactive, ref } from 'vue'
 import { FormInstance, FormRules } from 'element-plus'
 import store from '../../store/index'
 import { useRouter } from 'vue-router'
+import { getUser } from '../../http/index'
 const router = useRouter()
 const url = ref('images/logo.0606fdd2.png')
 const boxbg = ref('images/svgs/login-box-bg.svg')
@@ -100,8 +101,10 @@ const OnSubmit = async (ruleFormRef: FormInstance | undefined) => {
 	if (!ruleFormRef) return
 	await ruleFormRef.validate(async (valid, fields) => {
 		if (valid) {
-			ElMessage.success('登入成功')
-			store().EditUserId(1)
+			let userId = (await getUser(form.userName, form.passWord))
+				.data as number
+			console.log(userId)
+			store().EditUserId(userId)
 			router.push({ path: '/' })
 		} else {
 			let errors: string = ''

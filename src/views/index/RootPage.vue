@@ -12,7 +12,7 @@
 					@close="handleClose"
 					router
 				>
-					<ThreeMenu :list="res"></ThreeMenu>
+					<ThreeMenu :list="getTreeMenusApiRes"></ThreeMenu>
 				</el-menu>
 			</el-aside>
 			<el-container>
@@ -30,26 +30,24 @@ import {
 	Setting
 } from '@element-plus/icons-vue'
 import ThreeMenu from '../../components/TreeMenu.vue'
-import { ref } from 'vue'
-const res = ref([
-	{
-		index: '/',
-		name: '一級菜單1',
-		children: [
-			{ index: '/first2-1', name: '二級菜單2-1', children: null },
-			{ index: '/first2-2', name: '二級菜單2-2', children: null }
-		]
-	},
-	{
-		index: '/second',
-		name: '一級菜單2',
-		children: null
-	}
-])
+import { ref, onMounted } from 'vue'
+import { getTreeMenus } from '../../http/index'
+import TreeModel from '../../class/TreeModel'
+
 const handleOpen = (key: string, keyPath: string[]) => {
 	console.log(key, keyPath)
 }
 const handleClose = (key: string, keyPath: string[]) => {
 	console.log(key, keyPath)
 }
+
+// 定義一個TreeModel類型的ref物件用來承接getTreeMenus的查詢結果
+const getTreeMenusApiRes = ref<Array<TreeModel>>([])
+
+const getTreeMenusOnMounted = async () => {
+	getTreeMenusApiRes.value = (await getTreeMenus()).data
+}
+onMounted(() => {
+	getTreeMenusOnMounted()
+})
 </script>

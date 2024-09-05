@@ -6,58 +6,25 @@
 		border
 		default-expand-all
 	>
-		<el-table-column prop="date" label="Date" sortable />
-		<el-table-column prop="name" label="Name" sortable />
-		<el-table-column prop="address" label="Address" sortable />
+		<el-table-column prop="index" label="index" sortable />
+		<el-table-column prop="filePath" label="filePath" sortable />
+		<el-table-column prop="parentId" label="parentId" sortable />
+		<el-table-column prop="order" label="order" sortable />
 	</el-table>
 </template>
 <script lang="ts" setup>
-interface User {
-	id: number
-	date: string
-	name: string
-	address: string
-	hasChildren?: boolean
-	children?: User[]
+import { ref, onMounted } from 'vue'
+import { getTreeMenus } from '../../http/index'
+import axios from 'axios'
+import TreeModel from '../../class/TreeModel'
+
+const tableData = ref<Array<TreeModel>>()
+
+const getTreeMenusApiRes = async () => {
+	tableData.value = (await getTreeMenus()).data
 }
-const tableData: User[] = [
-	{
-		id: 1,
-		date: '2016-05-02',
-		name: 'wangxiaohu',
-		address: 'No. 189, Grove St, Los Angeles'
-	},
-	{
-		id: 2,
-		date: '2016-05-04',
-		name: 'wangxiaohu',
-		address: 'No. 189, Grove St, Los Angeles'
-	},
-	{
-		id: 3,
-		date: '2016-05-01',
-		name: 'wangxiaohu',
-		address: 'No. 189, Grove St, Los Angeles',
-		children: [
-			{
-				id: 31,
-				date: '2016-05-01',
-				name: 'wangxiaohu',
-				address: 'No. 189, Grove St, Los Angeles'
-			},
-			{
-				id: 32,
-				date: '2016-05-01',
-				name: 'wangxiaohu',
-				address: 'No. 189, Grove St, Los Angeles'
-			}
-		]
-	},
-	{
-		id: 4,
-		date: '2016-05-03',
-		name: 'wangxiaohu',
-		address: 'No. 189, Grove St, Los Angeles'
-	}
-]
+
+onMounted(() => {
+	getTreeMenusApiRes()
+})
 </script>
