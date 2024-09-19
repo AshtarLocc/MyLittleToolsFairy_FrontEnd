@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+
 const store = defineStore('counterStore', {
 	state: () => ({
 		userId: 0
@@ -9,17 +10,8 @@ const store = defineStore('counterStore', {
 		}
 	},
 	persist: {
-		enabled: true,
-		strategies: [
-			{
-				// 指定key，會在本地瀏覽器存儲中生成對應的name
-				key: 'site',
-				// 自定義存儲方式，默認使用sessionStorage
-				storage: localStorage,
-				// 指定要緩存的對象，默認是全部
-				paths: ['userId']
-			}
-		]
+		key: 'site', // 在 localStorage 中的鍵名
+		storage: localStorage // 使用 localStorage
 	}
 })
 export default store
